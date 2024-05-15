@@ -1,0 +1,163 @@
+SELECT column_name, data_type
+FROM user_tab_columns
+WHERE table_name = '"My_Table"';
+
+SELECT table_name 
+FROM all_tables 
+WHERE table_name LIKE '%My_Table%';
+
+SELECT table_name 
+FROM all_tables 
+WHERE table_name LIKE '%My_Table
+
+USER_PRIVATE_TEMP_TABLES
+
+DATE
+
+ORA$PTT_fodsel
+
+
+
+class MyCustomError(Exception):
+    """Custom exception class."""
+    def __init__(self, message):
+        super().__init__(message)
+
+def check_age(age):
+    if age < 18:
+        raise MyCustomError("Age below 18 is not allowed.")
+    return "Access Granted"
+
+try:
+    user_age = 16
+    message = check_age(user_age)
+    print(message)
+except MyCustomError as e:
+    print("Error:", e)
+
+
+
+# Define the query
+my_query = 'Age > 28'
+
+# Filter the dataframe
+filtered_df = df.query(my_query)
+
+
+TO_TIMESTAMP(string, format_mask)
+
+
+SELECT TO_TIMESTAMP('2024-01-15 10:20:30.123', 'YYYY-MM-DD HH24:MI:SS.FF') FROM dual;
+
+ test_n = 10 
+        test_data = generate_test_data(test_n)
+        table_name = "MY_TABLE"
+sql_insert = SQL_Insert(test_data.dtypes,table_name=table_name)
+
+
+>>> from numpy.random import Generator, PCG64DXSM
+>>> pcg64dxsm_rng = Generator(PCG64DXSM())
+>>> pcg64dxsm_rng.random()
+0.3472568589560456
+
+ .. note::
+        New code should use the `~numpy.random.Generator.uniform`
+        method of a `~numpy.random.Generator` instance instead;
+        please see the :ref:`random-quick-start`.
+
+
+import numpy as np
+rng = np.random.default_rng()
+# Generate one random float uniformly distributed over the range [0, 1)
+rng.random()  
+0.06369197489564249  # may vary
+# Generate an array of 10 numbers according to a unit Gaussian distribution.
+rng.standard_normal(10)  
+array([-0.31018314, -1.8922078 , -0.3628523 , -0.63526532,  0.43181166,  # may vary
+        0.51640373,  1.25693945,  0.07779185,  0.84090247, -2.13406828])
+# Generate an array of 5 integers uniformly over the range [0, 10).
+rng.integers(low=0, high=10, size=5)  
+array([8, 7, 6, 2, 0])  # may vary
+
+
+element_class_check = [
+            (pd.isna(datetime_col_with_na[ind]) or 
+             isinstance(datetime_col_with_na[ind],pd._libs.tslibs.timestamps.Timestamp)) and 
+                isinstance(datetime_col_without_na[ind],pd._libs.tslibs.timestamps.Timestamp) 
+                    for ind in range(len(datetime_col_with_na))
+                ]       
+               
+        subresults = [
+            isinstance(datetime_col_with_na, pd.Series),
+            isinstance(datetime_col_without_na, pd.Series),
+            isinstance(datetime_col_no_rows, pd.Series),
+            len(datetime_col_with_na) == test_n,
+            len(datetime_col_no_rows) == 0,                      
+            sum(pd.isna(datetime_col_with_na)) == ceil(len(datetime_col_with_na)/3),
+            sum(pd.isna(datetime_col_without_na)) == 0,
+            pd.Series(element_class_check).all() 
+            ]   
+
+
+element_class_check = [
+            isinstance(float_col_with_na[ind],float) and 
+                isinstance(float_col_without_na[ind],float) 
+                    for ind in range(len(float_col_with_na))
+                ]
+
+
+Trenger både sql_generator, sql_create og sql_
+
+def create_or_replace_persistent_table(self,df: pd.DataFrame ,table_name: str,**kwargs) -> None:
+        # Instansierer først et "SQL_Generator" - objekt
+        print('Er nå inne i create_or_replace_persistent_table')
+        sql_generator = SQL_Generator(df.dtypes,table_name=table_name,table_type='PERSISTENT',**kwargs)
+        #
+        print('Er nå tilbake i create_or_replace_persistent_table')
+        sql_create = SQL_Create(sql_generator)
+        sql_insert = SQL_Insert(sql_generator)
+        print('Klarte forhåpentlig å lage både sql_create og sql_insert')
+        data_to_insert = sql_insert.prepare_data_to_insert(df)
+        # Lager så strengene med sql-kommandoene
+        str_create_table = sql_create.sql_create_table()
+        str_insert_into = sql_insert.sql_insert_into()
+        print('str_insert_into er ')
+        print(str_insert_into)
+        print('data_to_insert er')
+        print(data_to_insert)
+        #
+        cx_conn = self.get_connection()
+        crsr = cx_conn.cursor()
+        if exists_table(sql_generator.table_name,crsr):
+            crsr.execute(f"DROP TABLE {sql_generator.table_name}")
+        #
+        crsr.execute(str_create_table).
+
+
+import pandas as pd
+
+# Sample DataFrame
+data = {'my_col': [5, 12, 15, 8, 10]}
+df = pd.DataFrame(data)
+
+# Using map with a lambda function and if-else
+df['my_col_transformed'] = df['my_col'].map(lambda x: x*2 if x > 10 else x)
+
+print(df)
+
+        cx_conn.commit()
+        crsr.executemany(str_insert_into,data_to_insert)
+        cx_conn.commit()
+        cx_conn.close()
+
+
+# Example of using globals() and locals()
+global_var = "I am global"
+
+def example_function():
+    local_var = "I am local"
+    print("Local variable:", locals().get('local_var', 'Default Value'))
+    print("Global variable:", globals().get('global_var', 'Default Value'))
+    print("Non-existent variable:", globals().get('non_existent_var', 'Default Value'))
+
+example_function()

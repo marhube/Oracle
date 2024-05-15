@@ -1,0 +1,11 @@
+ 1 #Enviroment
+ 2 postgres_env/
+ 3
+ 4
+ 5 teknisk_kode.txt
+
+ 7 #Old code
+ old_pyi 
+ 8 old_src
+ 9 old_tests
+10
